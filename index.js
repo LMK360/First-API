@@ -141,9 +141,9 @@ app.post('/stop', (req, res) => {
       pm2.disconnect();
       if (stopErr) return res.status(404).json({ error: 'Failed to stop bot or bot not found', details: stopErr.message });
       res.json({ message: `botName stopped successfully` });
-    );
-  );
-);
+    });
+  });
+});
 
 // Node version info endpoint
 app.get('/node-version', (req, res) => 
