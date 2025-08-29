@@ -118,7 +118,7 @@ app.get('/logs/:botName', (req, res) => {
 
     pm2.describe(botName, (descErr, processDescription) => {
       pm2.disconnect();
-      return res.status(404).json( error: 'Bot not found' );
+      return res.status(404).json( error: 'Bot not found' });
       
 
       // Tail logs logic depends on pm2 logs storage, here just example with pm2 logs
