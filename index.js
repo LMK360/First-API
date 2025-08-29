@@ -150,7 +150,13 @@ app.get('/node-version', (req, res) => {
   exec('node -v', (err, stdout) => {
     if (err) {
       return res.status(500).json({ error: 'Failed to get Node.js version' });
-    };
-const PORT = process.env.PORT || 3000;
+    });
+});
+
+app.get('/test', (req, res) => {
+  res.send('Hello World!');
+});
+
 app.listen(PORT, () => {
-  console.log({ message: `Server running on port PORT` });
+  console.log(`Server running on port ${PORT}`);
+});
