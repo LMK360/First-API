@@ -151,4 +151,7 @@ app.get('/node-version', (req, res) => {
     if (err) {
       return res.status(500).json({ error: 'Failed to get Node.js version' });
     }
-app.listen(PORT, () => console.log('Backend API running on port', PORT));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
