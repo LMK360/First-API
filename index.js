@@ -124,7 +124,7 @@ app.get('/logs/:botName', (req, res) => {
       // Tail logs logic depends on pm2 logs storage, here just example with pm2 logs
       // For real-time logs, you'd use pm2 logs stream or files
       // Here we return a placeholder
-      res.json( message: `Logs fetching for{botName} is not implemented, implement log streaming or file read.` });
+      res.json({ message: `Logs fetching for{botName} is not implemented, implement log streaming or file read.` });
     });
   });
 });
