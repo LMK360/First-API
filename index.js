@@ -149,8 +149,9 @@ app.post('/stop', (req, res) => {
 app.get('/node-version', (req, res) => {
   exec('node -v', (err, stdout) => {
     if (err) {
-      return res.status(500).json({ message: 'Failed to get Node.js version.' });
-    });
+      return res.status(500).json({ message: 'Failed to get Node.js version' });
+    }
+    res.json({ nodeVersion: stdout.trim() });
   });
 });
 
