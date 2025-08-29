@@ -74,7 +74,51 @@ app.post('/deploy', async (req, res) => {
         script: path.join(botDir, 'script.js'),
         cwd: botDir,
         autorestart: true,
-        return res.status(404).json( error: 'Bot not found' );
+        }, (startErr, proc) => {
+        pm2Disconnect();
+        if (startErr) return res.status(500).json({ error: 'Failed to start bot', details: startErr.message });
+
+        res.json({ message: 'Bot deployed and running', botName });
+      });
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.toString() });
+  }
+});
+
+// List running bots
+app.get('/bots', (req, res) => {
+  pm2.connect(err => {
+    if (err) return res.status(500).json({ error: 'PM2 connect error', details: err.message });
+
+    pm2.list((listErr, list) => {
+      pm2.disconnect();
+      if (listErr) return res.status(500).json({ error: 'Failed to list bots', details: listErr.message });
+
+      const bots = list
+        .filter(proc => proc.name.startsWith('bot'))
+        .map(proc => ({
+          name: proc.name,
+          pid: proc.pid,
+          status: proc.pm2_env.status,
+          restart_count: proc.pm2_env.restart_time
+        }));
+
+      res.json({ bots });
+    });
+  });
+});
+
+// Get logs of a bot
+app.get('/logs/:botName', (req, res) => {
+  const { botName } = req.params;
+
+  pm2.connect(err => {
+    if (err) return res.status(500).json({ error: 'PM2 connect error', details: err.message });
+
+    pm2.describe(botName, (descErr, processDescription) => {
+      pm2.disconnect();
+      return res.status(404).json( error: 'Bot not found' );
       
 
       // Tail logs logic depends on pm2 logs storage, here just example with pm2 logs
