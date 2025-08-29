@@ -146,12 +146,9 @@ app.post('/stop', (req, res) => {
 });
 
 // Node version info endpoint
-app.get('/node-version', (req, res) => 
+app.get('/node-version', (req, res) => {
   exec('node -v', (err, stdout) => {
-    if (err) { return res.status(500).json({ error: 'Failed to get Node.js version' });
-  }
-    res.json({ nodeVersion: stdout.trim() });
-      });
-  );
-
+    if (err) {
+      return res.status(500).json({ error: 'Failed to get Node.js version' });
+    }
 app.listen(PORT, () => console.log(`Backend API running on port{PORT}`));
