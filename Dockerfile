@@ -13,8 +13,8 @@ RUN pnpm install --frozen-lockfile
 #Copy the rest of your code
 COPY . .
 
-#Expose API port
+#Expose correct port
 EXPOSE 3000
 
-#Start the server
-CMD ["pnpm", "start"]
+#Start the server using node
+CMD ["node", "index.js"]
